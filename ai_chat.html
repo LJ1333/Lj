@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محادثة الذكاء الاصطناعي</title>
+    
+    <style>
+        /* المتغيرات (Variables) - للتنسيق الموحد */
+        :root {
+            --primary-color: #007bff;        /* أزرق ساطع */
+            --secondary-color: #28a745;      /* أخضر */
+            --background-light: #f8f9fa;     /* خلفية فاتحة جداً */
+            --text-dark: #343a40;            /* نص داكن */
+            --card-background: #ffffff;      /* خلفية البطاقة بيضاء */
+            --border-color: #dee2e6;         /* لون حدود خفيف */
+            --header-bg-color: #1a1a2e;      /* لون خلفية الشريط العلوي (داكن عميق) */
+            --header-text-color: #ffffff;    /* لون نص الشريط العلوي */
+        }
+
+        /* التنسيقات العامة للصفحة */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-light); 
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* الترويسة العلوية */
+        .main-header {
+            width: 100%;
+            background-color: var(--header-bg-color);
+            color: var(--header-text-color);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+        }
+
+        .main-header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(0, 123, 255, 0.5);
+            color: #fff;
+        }
+
+        /* رابط العودة للقائمة الرئيسية */
+        .back-link {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        /* ------------------------------------- */
+        /* تنسيقات واجهة المحادثة (الدردشة) */
+        /* ------------------------------------- */
+
+        .chat-container {
+            max-width: 600px;
+            width: 90%;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-box {
+            height: 400px;
+            overflow-y: auto;
+            padding-right: 15px; 
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* الرسائل */
+        .message {
+            max-width: 80%;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-message {
+            align-self: flex-end; /* رسائل المستخدم على اليمين */
+            background-color: var(--primary-color); 
+            color: white;
+            border-bottom-right-radius: 5px; 
+        }
+
+        .ai-message {
+            align-self: flex-start; /* رسائل الذكاء الاصطناعي على اليسار */
+            background-color: var(--background-light); 
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 5px; 
+        }
+
+        /* صندوق الإدخال وزر الإرسال */
+        #user-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 25px;
+            font-size: 1rem;
+            margin-left: 10px;
+            box-sizing: border-box;
+            text-align: right; /* للمواءمة مع اللغة العربية */
+        }
+
+        #send-button {
+            background-color: var(--secondary-color); /* أخضر */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #send-button:hover {
+            background-color: #1e7e34;
+        }
+        
+        /* الاستجابة للشاشات الصغيرة */
+        @media (max-width: 600px) {
+            #user-input {
+                margin-left: 5px;
+                padding: 10px;
+            }
+            #send-button {
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-header">
+        <h1>محادثة الذكاء الاصطناعي 🤖</h1>
+    </div>
+    
+    <a href="index.html" class="back-link">العودة إلى القائمة الرئيسية</a>
+
+    <div class="chat-container">
+        <div id="chat-box">
+            <div class="message ai-message">مرحباً بك في خدمة الذكاء الاصطناعي من تصميم ليث. اسألني أي شيء!</div>
+        </div>
+        
+        <div style="display: flex; margin-top: 15px;">
+            <input type="text" id="user-input" placeholder="اكتب سؤالك هنا..." onkeydown="if(event.key === 'Enter') sendMessage()">
+            <button id="send-button" onclick="sendMessage()">إرسال</button>
+        </div>
+    </div>
+
+    <script>
+        // *** ضع رابط تطبيق الويب Apps Script الخاص بك هنا ***
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5RGi2UG1hZ3DofBvGjTwcjDLakUtRZHOkliYgoQIfM4QJZTzvkvHR8QvjHKJthQfY8w/exec'; // مثال: 'https://script.google.com/macros/s/AKfycb...exec'
+
+        function sendMessage() {
+            const inputElement = document.getElementById('user-input');
+            const chatBox = document.getElementById('chat-box');    
+            const message = inputElement.value.trim();
+
+            if (message === "") return;
+
+            // 1. عرض رسالة المستخدم فوراً
+            const userDiv = document.createElement('div');
+            userDiv.className = 'message user-message';
+            userDiv.textContent = message;
+            chatBox.appendChild(userDiv);
+
+            // مسح صندوق الإدخال فوراً
+            inputElement.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight; // التمرير للأسفل
+
+            // 2. إظهار رسالة "جاري الكتابة..."
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'message ai-message';
+            loadingDiv.id = 'loading-message';
+            loadingDiv.textContent = 'جاري الكتابة...';
+            chatBox.appendChild(loadingDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; 
+
+            // 3. الاتصال بتطبيق الويب (Apps Script)
+            fetch(`${APPS_SCRIPT_URL}?message=${encodeURIComponent(message)}`)
+                .then(response => response.text())
+                .then(aiResponse => {
+                    // إزالة رسالة التحميل
+                    loadingDiv.remove();
+
+                    // عرض رد الذكاء الاصطناعي
+                    const aiDiv = document.createElement('div');
+                    aiDiv.className = 'message ai-message';
+                    aiDiv.textContent = aiResponse;
+                    chatBox.appendChild(aiDiv);
+                    
+                    chatBox.scrollTop = chatBox.scrollHeight; // التمرير للأسفل
+                })
+                .catch(error => {
+                    loadingDiv.remove();
+                    const errorDiv = document.createElement('div');
+                    errorDiv.className = 'message ai-message';
+                    errorDiv.textContent = `حدث خطأ في الاتصال بالذكاء الاصطناعي. قد تكون المشكلة في رابط Apps Script أو صلاحيات الوصول.`;
+                    chatBox.appendChild(errorDiv);
+                    console.error("Fetch Error:", error);
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                });
+        }
+    </script>
+</body>
+</html>
