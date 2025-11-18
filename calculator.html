@@ -9,41 +9,36 @@
 
     <style>
         /* ------------------------------------- */
-        /* 1. التنسيقات العامة المدمجة من styles.css */
+        /* التنسيقات العامة */
         /* ------------------------------------- */
 
         /* المتغيرات (Variables) */
         :root {
-            --primary-color: #007bff;        /* أزرق ساطع */
+            --primary-color: #007bff;        
             --secondary-color: #28a745;      /* أخضر */
-            --background-light: #f8f9fa;     /* خلفية فاتحة جداً */
-            --text-dark: #343a40;            /* نص داكن */
-            --card-background: #ffffff;      /* خلفية البطاقة بيضاء */
-            --border-color: #dee2e6;          /* لون حدود خفيف */
-            --header-bg-color: #1a1a2e;       /* لون خلفية الشريط العلوي (داكن عميق) */
-            --header-text-color: #ffffff;    /* لون نص الشريط العلوي */
+            --background-light: #f8f9fa;     
+            --text-dark: #343a40;           
+            --card-background: #ffffff;      
+            --border-color: #dee2e6;         
+            --header-bg-color: #1a1a2e;      
+            --header-text-color: #ffffff;   
 
-            /* 2. المتغيرات الخاصة بالآلة الحاسبة (للتكامل) */
-            --casio-frame-color: #333;
-            --casio-key-base: #f7f7f7;
-            --casio-key-num: #e0e0e0;
-            --casio-key-func: #c0c0c0;
-            --casio-key-op: #a0a0a0;
-            --casio-screen-bg: #e0eee0;
-            --casio-shift-color: #007bff; /* أزرق */
-            --casio-alpha-color: #f44336; /* أحمر */
+            /* المتغيرات الخاصة بالحاسبة */
+            --calculator-bg: #e0e0e0;       /* لون جسم الحاسبة */
+            --screen-bg: #cff0cc;           /* لون شاشة العرض فاتح */
+            --input-color: #101010;         /* لون إدخال */
+            --result-color: #28a745;        /* لون النتيجة (أخضر) */
+            --key-normal-bg: #ffffff;       /* مفاتيح الأرقام */
+            --key-function-bg: #f0f0f0;     /* مفاتيح الوظائف */
+            --key-special-bg: #f9d8a5;      /* مفاتيح العمليات */
+            --key-shift-bg: #fff0d8;        /* مفاتيح SHIFT و ALPHA */
+            --key-shift-color: #ff0000;     /* لون نص SHIFT */
+            --key-alpha-color: #0056b3;     /* لون نص ALPHA */
         }
-
-        /* 💻 تنسيق الجسم (من styles.css) */
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            
-            /* تم تحديث الخلفية لتعمل مع متغير styles.css */
             background-color: var(--background-light); 
-            background-size: cover; 
-            background-attachment: fixed; 
-            background-position: center center; 
-            
             color: var(--text-dark);
             margin: 0;
             padding: 0;
@@ -51,10 +46,8 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            width: 100%; /* إضافة من كود الحاسبة لضمان الامتداد */
         }
 
-        /* الترويسة العلوية للموقع (من styles.css) */
         .main-header {
             width: 100%;
             background-color: var(--header-bg-color);
@@ -67,657 +60,528 @@
 
         .main-header h1 {
             margin: 0;
-            font-size: 2.5rem;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 
-                         0 0 10px rgba(0, 123, 255, 0.5); 
-            color: #fff; 
+            font-size: 2rem;
         }
-
-        /* الروابط العامة (من styles.css) */
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-
-        /* رابط العودة (من styles.css) */
+        
         .back-link {
             margin-bottom: 20px;
             text-decoration: none;
             color: var(--primary-color);
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             transition: color 0.3s;
+            display: block; 
+            text-align: right;
+            width: 90%;
+            max-width: 450px;
         }
         .back-link:hover {
-            color: #0056b3; /* لون أغمق للهوفر */
+            color: #0056b3; 
         }
 
         /* ------------------------------------- */
-        /* 2. تنسيقات الآلة الحاسبة الخاصة */
+        /* تنسيق الآلة الحاسبة */
         /* ------------------------------------- */
 
-        /* تنسيقات الآلة الحاسبة */
-        .calculator {
-            border: 1px solid var(--casio-frame-color);
-            border-radius: 12px;
-            width: 500px; 
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            background-color: var(--casio-frame-color);
+        .calculator-container {
+            width: 90%;
+            max-width: 450px;
+            background-color: var(--calculator-bg);
+            border-radius: 10px;
             padding: 15px;
-            margin-bottom: 30px; 
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 40px;
         }
 
-        /* شاشة العرض */
-        .calculator-screen {
-            width: 100%;
-            height: 90px;
-            background-color: var(--casio-screen-bg);
-            color: #333;
-            text-align: right;
-            padding: 10px;
-            font-size: 1.4rem;
-            border: 1px solid #aaa;
-            box-sizing: border-box;
+        .screen {
+            background-color: var(--screen-bg);
+            padding: 15px 10px;
             border-radius: 5px;
             margin-bottom: 15px;
-            direction: ltr; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .input-display, .result-display {
+            direction: ltr; /* الإظهار من اليسار لليمين */
+            text-align: right;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 5px 0;
         }
         
-        #status-indicators {
-            font-size: 0.8rem; 
-            color: #555;
-            text-align: left;
-            height: 15px;
+        .input-display {
+            min-height: 30px;
+            color: var(--input-color);
+            font-size: 1.4rem;
         }
 
-        #expression {
-            font-size: 1.2rem;
-            min-height: 20px;
+        .result-display {
+            min-height: 25px;
+            color: var(--result-color);
+            font-size: 1.1rem;
         }
 
-        #result {
-            font-size: 2.2rem;
-            font-weight: bold;
-            color: #004d99;
-            min-height: 35px;
-        }
-
-        /* تخطيط الأزرار: 7 أعمدة */
-        .calculator-keys {
+        .keypad {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            grid-gap: 5px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 5px;
         }
-        
-        button {
-            height: 45px;
-            background-color: var(--casio-key-num);
+
+        .key {
+            padding: 15px 5px;
             border: none;
-            border-radius: 3px;
-            font-size: 1rem;
-            color: #333;
-            cursor: pointer;
-            transition: background-color 0.1s;
-            font-weight: 600;
-        }
-
-        button:hover {
-            opacity: 0.85;
-        }
-
-        /* الأزرار العلوية (SH/AL) */
-        .top-key {
-            background-color: var(--casio-key-base);
-            color: black;
-            font-size: 0.8rem;
-            font-weight: normal;
-        }
-
-        .active-shift {
-            background-color: var(--casio-shift-color) !important;
-            color: white !important;
-        }
-        
-        .active-alpha {
-            background-color: var(--casio-alpha-color) !important;
-            color: white !important;
-        }
-
-        /* أزرار DEL/AC */
-        .control-key {
-            background-color: #a0a0a0;
-            color: black;
-            font-weight: bold;
-        }
-        
-        /* الأزرار البرتقالية (الـ Scientific Keys في FX-991EX) */
-        .scientific-key {
-            background-color: var(--casio-key-func);
-            color: black;
+            border-radius: 4px;
             font-size: 0.9rem;
-            font-weight: normal;
-        }
-        
-        /* زر يساوي */
-        .equal-sign {
-            background-color: #00bcd4;
-            color: white;
-            font-size: 1.5rem;
             font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.1s, transform 0.05s;
+            line-height: 1.2;
+            min-width: 0;
+            position: relative;
+        }
+
+        .key:active {
+            transform: scale(0.98);
+        }
+
+        /* تنسيقات خاصة للمفاتيح */
+        
+        /* مفاتيح الأرقام */
+        .key-digit {
+            background-color: var(--key-normal-bg);
+            color: var(--input-color);
+            font-size: 1.1rem;
         }
         
-        /* تنسيقات نافذة MODE */
-        #modeModal {
+        /* مفاتيح الوظائف الرئيسية (sin, log, etc) */
+        .key-function {
+            background-color: var(--key-function-bg);
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+        
+        /* مفاتيح العمليات (=, +, - , x, ÷) و AC, DEL */
+        .key-operator, .key-action {
+            background-color: var(--key-special-bg);
+            color: var(--text-dark);
+        }
+
+        .key-action.AC {
+            background-color: #ff5757; /* أحمر لـ AC */
+            color: white;
+        }
+        .key-action.DEL {
+            background-color: #ff9933; /* برتقالي لـ DEL */
+            color: white;
+        }
+        
+        .key-operator.equals {
+            background-color: #007bff; /* أزرق لـ = */
+            color: white;
+        }
+
+        /* مفاتيح SHIFT و ALPHA */
+        .key-mode {
+            background-color: var(--key-shift-bg);
+            font-size: 0.75rem;
+            padding: 10px 5px;
+        }
+
+        .key-mode.shift {
+            color: var(--key-shift-color);
+        }
+
+        .key-mode.alpha {
+            color: var(--key-alpha-color);
+        }
+
+        /* تنسيق النص الثانوي (SHIFT & ALPHA) */
+        .secondary-text {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 0.65rem;
+            pointer-events: none; /* لمنع تداخل الضغط */
+        }
+
+        .secondary-text.shift {
+            color: var(--key-shift-color);
+        }
+
+        .secondary-text.alpha {
+            top: 15px; 
+            right: 4px;
+            font-size: 0.65rem;
+            color: var(--key-alpha-color);
+        }
+
+        /* حالة التفعيل لـ SHIFT و ALPHA */
+        .key-mode.active {
+            outline: 3px solid rgba(0, 0, 0, 0.5); 
+            box-shadow: 0 0 0 3px white, 0 0 0 5px currentColor;
+        }
+
+        /* تنسيق الشاشات الصغيرة */
+        @media (max-width: 400px) {
+            .key {
+                padding: 12px 3px;
+                font-size: 0.8rem;
+            }
+            .key-mode {
+                padding: 8px 3px;
+                font-size: 0.7rem;
+            }
+        }
+
+        /* ------------------------------------- */
+        /* تنسيق الـ Modal (وضع الحاسبة) */
+        /* ------------------------------------- */
+        
+        .modal {
             display: none; 
             position: fixed;
-            top: 0;
+            z-index: 1000;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1001;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4); 
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
         }
 
-        .mode-box {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
-            width: 90%;
-            max-width: 600px; 
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            text-align: right;
+        }
+
+        .modal-content h2 {
             text-align: center;
+            color: var(--header-bg-color);
         }
 
-        .mode-box h2 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        .mode-options {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .mode-button {
-            padding: 10px 5px;
-            background-color: #eee;
-            border: 1px solid #ddd;
+        .mode-option {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #f1f1f1;
             border-radius: 5px;
-            font-size: 0.95rem;
             cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            text-align: left;
+            transition: background-color 0.3s;
+            font-weight: bold;
         }
         
-        .mode-button span {
-            font-weight: bold;
-            color: #007bff;
-            margin-right: 5px;
+        .mode-option:hover {
+            background-color: #ddd;
         }
 
-        .mode-button:hover {
-            background-color: #e0e0e0;
-            transform: translateY(-1px);
+        .mode-option.active-mode {
+            background-color: var(--primary-color);
+            color: white;
         }
-        
-        /* النافذة الترحيبية */
-        .welcome-box { 
-            background-color: #fff; 
-            padding: 30px 40px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
-            text-align: center; 
-            width: 90%; 
-            max-width: 400px; 
-            border: 3px solid #007bff; 
-            animation: fadeIn 0.5s; 
+
+        .close-button {
+            color: #aaa;
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
         }
-        .welcome-box p { 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            color: #1a1a2e; 
-            margin-bottom: 25px; 
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
-        .continue-button { 
-            padding: 12px 30px; 
-            background-color: #007bff; 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 1.2rem; 
-            cursor: pointer; 
-            transition: background-color 0.3s; 
-        }
-        .continue-button:hover { 
-            background-color: #0056b3; 
-        }
-        .modal-overlay { 
-            display: flex; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background-color: rgba(0, 0, 0, 0.7); 
-            z-index: 1000; 
-            justify-content: center; 
-            align-items: center; 
-            backdrop-filter: blur(5px); 
-        }
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: scale(0.9); } 
-            to { opacity: 1; transform: scale(1); } 
-        }
-        
+
     </style>
 </head>
-<body onload="openWelcomeModal(); updateStatusDisplay();">
-    
-    <div class="main-header">
-        <h1>الآلة الحاسبة العلمية Casio fx-991EX 📐</h1>
-    </div>
+<body>
+    <header class="main-header">
+        <h1>🔢 الآلة الحاسبة العلمية (Casio Style)</h1>
+    </header>
 
-    <div id="welcomeModal" class="modal-overlay">
-        <div class="welcome-box">
-            <p>طبعاً كلو شغلي مش زي بعض الناس 😉</p>
-            <button class="continue-button" onclick="closeWelcomeModal()">أكمل</button>
-        </div>
-    </div>
-    
-    <div id="modeModal">
-        <div class="mode-box">
-            <h2>اختيار وضع الحاسبة (MODE)</h2>
-            <div class="mode-options">
-                <button class="mode-button" onclick="setCalculatorMode('COMP')"><span>1:</span> COMP (حساب)</button>
-                <button class="mode-button" onclick="setCalculatorMode('STAT')"><span>2:</span> STAT (إحصاء)</button>
-                <button class="mode-button" onclick="setCalculatorMode('TABLE')"><span>3:</span> TABLE (جدول)</button>
-                <button class="mode-button" onclick="setCalculatorMode('EQN')"><span>4:</span> EQN (معادلات)</button>
-                <button class="mode-button" onclick="setCalculatorMode('BASE-N')"><span>5:</span> BASE-N (قاعدة-N)</button>
-                <button class="mode-button" onclick="setCalculatorMode('VECTOR')"><span>6:</span> VECTOR (متجهات)</button>
-                <button class="mode-button" onclick="setCalculatorMode('MATRIX')"><span>7:</span> MATRIX (مصفوفات)</button>
-                <button class="mode-button" onclick="setCalculatorMode('Ratio')"><span>8:</span> Ratio (نسبة)</button>
-                <button class="mode-button" onclick="setCalculatorMode('Inequality')"><span>9:</span> Inequality (متباينة)</button>
-                <button class="mode-button" onclick="setCalculatorMode('DIST')"><span>10:</span> DIST (توزيع)</button>
-                <button class="mode-button" onclick="setCalculatorMode('DEG')"><span>11:</span> DEG (درجات)</button>
-                <button class="mode-button" onclick="setCalculatorMode('RAD')"><span>12:</span> RAD (راديان)</button>
-                <button class="mode-button" onclick="setCalculatorMode('GRAD')"><span>13:</span> GRAD (جريديان)</button>
-            </div>
-            <button class="continue-button" style="margin-top: 15px;" onclick="closeModeModal()">إغلاق النافذة</button>
-        </div>
-    </div>
-    
     <a href="index.html" class="back-link">العودة إلى القائمة الرئيسية</a>
 
-    <div class="calculator">
-        <div class="calculator-screen">
-            <div id="status-indicators"></div> 
-            <div id="expression"></div>
-            <div id="result">0</div>
+    <div class="calculator-container">
+        <div class="screen">
+            <div id="inputDisplay" class="input-display"></div>
+            <div id="resultDisplay" class="result-display">0</div>
         </div>
-        
-        <div class="calculator-keys">
-            
-            <button id="shift-key" class="top-key" value="shift" title="وظيفة ثانوية">SHIFT</button>
-            <button id="alpha-key" class="top-key" value="alpha" title="أحرف ومتغيرات">ALPHA</button>
-            <button id="mode-key" class="scientific-key" value="open-mode-modal">MODE</button>
-            <button class="scientific-key" value="setup" title="SHIFT+MODE">SETUP</button>
-            <button class="scientific-key" value="on-off" title="تشغيل/إيقاف">ON</button>
-            <button class="control-key" value="delete">DEL</button>
-            <button class="control-key" value="all-clear">AC</button>
-            
-            <button id="sin-key" class="scientific-key" value="sin(" title="SHIFT+sin: sin⁻¹">sin</button>
-            <button id="cos-key" class="scientific-key" value="cos(" title="SHIFT+cos: cos⁻¹">cos</button>
-            <button id="tan-key" class="scientific-key" value="tan(" title="SHIFT+tan: tan⁻¹">tan</button>
-            <button class="scientific-key" value="hyp" title="دالة زائفة">hyp</button>
-            <button class="scientific-key" value="Pol(" title="SHIFT+Rec: إحداثيات ديكارتية">Pol</button>
-            <button class="scientific-key" value="^">xʸ</button>
-            <button class="scientific-key" value="sqrt(">√</button>
 
-            <button class="scientific-key" value="log(" title="SHIFT+log: 10^x">log</button>
-            <button class="scientific-key" value="ln(" title="SHIFT+ln: e^x">ln</button>
-            <button class="scientific-key" value="exp" title="SHIFT+exp: e">eˣ</button>
-            <button class="scientific-key" value="Abs(" title="القيمة المطلقة">Abs</button>
-            <button class="scientific-key" value="Eng" title="الهندسية">ENG</button>
-            <button class="scientific-key" value="(">(</button>
-            <button class="scientific-key" value=")">)</button>
-            
-            <button class="scientific-key" value="x⁻¹" title="SHIFT+x⁻¹: Fact!">x⁻¹</button>
-            <button class="scientific-key" value="x²" title="SHIFT+x²: جذر تربيعي">x²</button>
-            <button class="scientific-key" value="fact" title="x!">nPr</button>
-            <button class="scientific-key" value="deg-min-sec" title="º ’ ”">º ”</button>
-            <button class="scientific-key" value="STO" title="تخزين (ALPHA+STO: متغيرات)">STO</button>
-            <button class="scientific-key" value="RCL" title="استدعاء (ALPHA+RCL: متغيرات)">RCL</button>
-            <button class="scientific-key" value="CALC" title="حل معادلات">CALC</button>
-            
-            <button value="7">7</button>
-            <button value="8">8</button>
-            <button value="9">9</button>
-            <button class="operator" value="/">÷</button>
-            <button class="operator" value="*">&times;</button>
-            <button class="scientific-key" value="S<=>D" title="تحويل عشري/كسري">S<=>D</button>
-            <button class="scientific-key" value="Ans" title="النتيجة الأخيرة">Ans</button>
+        <div class="keypad" id="keypad">
+            <button class="key key-mode shift" data-value="shift">
+                SHIFT
+                <span class="secondary-text alpha">Alpha</span>
+            </button>
+            <button class="key key-function" data-value="open-mode-modal">MODE</button>
+            <button class="key key-function" data-value="fact">
+                <span class="secondary-text shift">nCr</span>
+                <span class="secondary-text alpha">nPr</span>
+                x!
+            </button>
+            <button class="key key-function" data-value="abs(">
+                <span class="secondary-text shift">RND</span>
+                Abs
+            </button>
+            <button class="key key-action DEL" data-value="DEL">DEL</button>
+            <button class="key key-action AC" data-value="AC">AC</button>
 
-            <button value="4">4</button>
-            <button value="5">5</button>
-            <button value="6">6</button>
-            <button class="operator" value="-">-</button>
-            <button class="operator" value="+">+</button>
-            <button class="scientific-key" value="Exp" title="أس 10 (E)">EXP</button>
-            <button class="scientific-key" value="rnd" title="تقريب">Rnd</button>
-            
-            <button value="1">1</button>
-            <button value="2">2</button>
-            <button value="3">3</button>
-            <button class="scientific-key" value="pi">π</button>
-            <button class="scientific-key" value="e">e</button>
-            <button class="scientific-key" value="comma">,</button>
-            <button class="scientific-key" value="mod" title="باقي القسمة">Mod</button>
+            <button class="key key-function" data-value="ln(">
+                <span class="secondary-text shift">exp(</span>
+                ln(
+            </button>
+            <button class="key key-function" data-value="log(">
+                <span class="secondary-text shift">10^</span>
+                log(
+            </button>
+            <button class="key key-function" data-value="x²">
+                <span class="secondary-text shift">sqrt(</span>
+                x²
+            </button>
+            <button class="key key-function" data-value="^">
+                <span class="secondary-text shift">nroot(</span>
+                xʸ
+            </button>
+            <button class="key key-function" data-value="(">(</button>
+            <button class="key key-function" data-value=")">)</button>
 
-            <button value="0" class="span-2">0</button>
-            <button class="decimal" value=".">.</button>
-            <button class="scientific-key" value="minus-sign" title="تغيير الإشارة">(-)</button>
-            <button class="equal-sign span-3" value="=">=</button>
+            <button class="key key-function" data-value="sin(">
+                <span class="secondary-text shift">asin(</span>
+                sin(
+            </button>
+            <button class="key key-function" data-value="cos(">
+                <span class="secondary-text shift">acos(</span>
+                cos(
+            </button>
+            <button class="key key-function" data-value="tan(">
+                <span class="secondary-text shift">atan(</span>
+                tan(
+            </button>
+            <button class="key key-function" data-value="π">π</button>
+            <button class="key key-function" data-value="e">e</button>
+            <button class="key key-operator divide" data-value="/">÷</button>
+            
+            <button class="key key-digit" data-value="7">7</button>
+            <button class="key key-digit" data-value="8">8</button>
+            <button class="key key-digit" data-value="9">9</button>
+            <button class="key key-function" data-value="x⁻¹">
+                <span class="secondary-text shift">fact(</span>
+                x⁻¹
+            </button>
+            <button class="key key-function" data-value="E">ENG</button>
+            <button class="key key-operator multiply" data-value="*">×</button>
+
+            <button class="key key-digit" data-value="4">4</button>
+            <button class="key key-digit" data-value="5">5</button>
+            <button class="key key-digit" data-value="6">6</button>
+            <button class="key key-function" data-value="ans">ANS</button>
+            <button class="key key-function" data-value="R->P">R▶P</button>
+            <button class="key key-operator subtract" data-value="-">-</button>
+
+            <button class="key key-digit" data-value="1">1</button>
+            <button class="key key-digit" data-value="2">2</button>
+            <button class="key key-digit" data-value="3">3</button>
+            <button class="key key-function" data-value="comma">,</button>
+            <button class="key key-function" data-value="STO">STO</button>
+            <button class="key key-operator add" data-value="+">+</button>
+
+            <button class="key key-digit" data-value="0">0</button>
+            <button class="key key-digit" data-value=".">.</button>
+            <button class="key key-function" data-value="+/-">(-)</button>
+            <button class="key key-function" data-value="space">SPC</button>
+            <button class="key key-function" data-value="alpha">Alpha</button>
+            <button class="key key-operator equals" data-value="=">=</button>
         </div>
     </div>
     
+    <div id="modeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModeModal()">&times;</span>
+            <h2>وضع الزاوية</h2>
+            <div id="degModeOption" class="mode-option" data-mode="deg">1. Deg (درجات)</div>
+            <div id="radModeOption" class="mode-option" data-mode="rad">2. Rad (راديان)</div>
+        </div>
+    </div>
+
+
     <script>
-        // *************** متغيرات الآلة الحاسبة ***************
-        let expressionDisplay = document.getElementById('expression');
-        let resultDisplay = document.getElementById('result');
-        let currentExpression = '';
-        let isResultDisplayed = false;
-        const welcomeModal = document.getElementById('welcomeModal');
-        const modeModal = document.getElementById('modeModal'); 
-        let lastAnswer = 0; // لتخزين آخر نتيجة (Ans)
-        
-        // *************** متغيرات حالة SHIFT, ALPHA, MODE ***************
+        const inputDisplay = document.getElementById('inputDisplay');
+        const resultDisplay = document.getElementById('resultDisplay');
+        const keypad = document.getElementById('keypad');
+        const modeModal = document.getElementById('modeModal');
+        const shiftKey = document.querySelector('.key-mode.shift');
+        const alphaKey = document.querySelector('.key-mode.alpha');
+
         let isShiftActive = false;
         let isAlphaActive = false;
-        let calculatorMode = 'COMP'; // الوضع الافتراضي
-        let angleMode = 'DEG'; // وضع الزاوية الافتراضي
+        let angleMode = 'deg'; // deg | rad
+        let lastResult = 0;
+        let lastInput = '';
 
-        // *************** وظائف الـ Modal ***************
-        function openWelcomeModal() {
-            welcomeModal.style.display = 'flex';
-        }
-        
-        function closeWelcomeModal() {
-            welcomeModal.style.display = 'none';
-        }
+        // -------------------------------------
+        // وظائف وضع الزاوية (Degree/Radian)
+        // -------------------------------------
 
         function openModeModal() {
             modeModal.style.display = 'flex';
-            isShiftActive = false;
-            isAlphaActive = false;
-            updateStatusDisplay();
+            document.getElementById('degModeOption').classList.toggle('active-mode', angleMode === 'deg');
+            document.getElementById('radModeOption').classList.toggle('active-mode', angleMode === 'rad');
         }
-        
+
         function closeModeModal() {
             modeModal.style.display = 'none';
         }
 
-        function setCalculatorMode(mode) {
-            // يتم تغيير مؤشر الزاوية فقط لهذه الأوضاع
-            if (['DEG', 'RAD', 'GRAD'].includes(mode)) {
-                angleMode = mode;
-            } 
-            // يتم تغيير وضع الحساب الرئيسي للأوضاع الأخرى
-            else {
-                calculatorMode = mode;
-            }
-            
-            // لا يتم محاولة تطبيق المنطق الرياضي المعقد لـ STAT/MATRIX إلخ. هنا، يتم فقط تحديث المؤشر
+        function setAngleMode(mode) {
+            angleMode = mode;
             closeModeModal();
-            updateStatusDisplay();
+            // يمكنك إضافة مؤشر في الشاشة هنا إذا أردت
+            console.log(`Angle mode set to: ${angleMode}`);
         }
-
-        // *************** وظيفة تحديث حالة الشاشة ***************
-        function updateStatusDisplay() {
-            const indicator = document.getElementById('status-indicators');
-            const shiftButton = document.getElementById('shift-key');
-            const alphaButton = document.getElementById('alpha-key');
-            
-            let statusText = '';
-            
-            // مؤشر SHIFT
-            if (isShiftActive) {
-                statusText += '<span style="color: var(--casio-shift-color); margin-right: 10px;">S</span>';
-                shiftButton.classList.add('active-shift');
-            } else {
-                shiftButton.classList.remove('active-shift');
-            }
-            
-            // مؤشر ALPHA
-            if (isAlphaActive) {
-                statusText += '<span style="color: var(--casio-alpha-color); margin-right: 10px;">A</span>';
-                alphaButton.classList.add('active-alpha');
-            } else {
-                alphaButton.classList.remove('active-alpha');
-            }
-            
-            // مؤشر MODE و Angle Mode
-            statusText += `<span style="color: #555; margin-left: 10px;">${calculatorMode}</span>`;
-            
-            // عرض مؤشر الزاوية فقط إذا لم يكن COMP، ولكن Casio تظهره دائماً تقريباً
-            if (angleMode !== 'COMP') { 
-                statusText += `<span style="color: #555;">${angleMode}</span>`;
-            }
-            
-            indicator.innerHTML = statusText;
-            
-            // تحديث محتوى الأزرار الثانوية (HTML الداخلي)
-            document.getElementById('sin-key').innerHTML = isShiftActive ? '<span style="color: var(--casio-shift-color); font-size: 0.7rem;">sin⁻¹</span><br>sin' : 'sin';
-            document.getElementById('cos-key').innerHTML = isShiftActive ? '<span style="color: var(--casio-shift-color); font-size: 0.7rem;">cos⁻¹</span><br>cos' : 'cos';
-            document.getElementById('tan-key').innerHTML = isShiftActive ? '<span style="color: var(--casio-shift-color); font-size: 0.7rem;">tan⁻¹</span><br>tan' : 'tan';
-
-        }
-
-        // *************** وظائف الأزرار الخاصة (SHIFT, ALPHA) ***************
         
+        document.getElementById('degModeOption').onclick = () => setAngleMode('deg');
+        document.getElementById('radModeOption').onclick = () => setAngleMode('rad');
+        
+        // -------------------------------------
+        // وظائف التحكم بـ SHIFT و ALPHA
+        // -------------------------------------
+
         function toggleShift() {
             isShiftActive = !isShiftActive;
-            isAlphaActive = false; // إلغاء Alpha عند الضغط على Shift
-            updateStatusDisplay();
+            shiftKey.classList.toggle('active', isShiftActive);
+            // إلغاء تفعيل Alpha عند تفعيل Shift
+            if (isShiftActive && isAlphaActive) {
+                isAlphaActive = false;
+                alphaKey.classList.remove('active');
+            }
         }
 
         function toggleAlpha() {
             isAlphaActive = !isAlphaActive;
-            isShiftActive = false; // إلغاء Shift عند الضغط على Alpha
-            updateStatusDisplay();
+            alphaKey.classList.toggle('active', isAlphaActive);
+             // إلغاء تفعيل Shift عند تفعيل Alpha
+            if (isAlphaActive && isShiftActive) {
+                isShiftActive = false;
+                shiftKey.classList.remove('active');
+            }
         }
 
-        // *************** تعديل Math.js لدمج Angle Mode ***************
-        const originalMathEvaluate = math.evaluate;
+        // -------------------------------------
+        // وظائف الإدخال والتحويل
+        // -------------------------------------
+        
+        // تحويل تعابير الآلة الحاسبة إلى تعابير math.js
+        function sanitizeInput(expression) {
+            let sanitized = expression.replace(/×/g, '*')
+                                    .replace(/÷/g, '/')
+                                    .replace(/Ans/g, lastResult)
+                                    .replace(/fact/g, 'factorial')
+                                    .replace(/Abs/g, 'abs')
+                                    .replace(/log\(/g, 'log10(') // math.js uses log for natural log, log10 for base 10
+                                    .replace(/exp\(/g, 'e^(')
+                                    .replace(/^(-)/, '0$1'); // للتعامل مع (-1) في البداية
 
-        math.evaluate = (expr) => {
-            let scope = {
-                'pi': Math.PI,
-                'e': Math.E,
-                'Ans': lastAnswer,
-            };
-            
-            // التحقق من وضع الزاوية
-            const degToRad = (x) => x * (Math.PI / 180);
-            const radToDeg = (x) => x * (180 / Math.PI);
-            const gradToRad = (x) => x * (Math.PI / 200);
-            
-            // دوال مثلثية تدعم الأوضاع المختلفة
-            let sinFunc, cosFunc, tanFunc;
-
-            if (angleMode === 'RAD') {
-                sinFunc = Math.sin;
-                cosFunc = Math.cos;
-                tanFunc = Math.tan;
-                scope.asin = Math.asin;
-                scope.acos = Math.acos;
-                scope.atan = Math.atan;
-            } else if (angleMode === 'GRAD') {
-                sinFunc = (x) => Math.sin(gradToRad(x));
-                cosFunc = (x) => Math.cos(gradToRad(x));
-                tanFunc = (x) => Math.tan(gradToRad(x));
-                scope.asin = (x) => radToDeg(Math.asin(x)) * 200 / 180;
-                scope.acos = (x) => radToDeg(Math.acos(x)) * 200 / 180;
-                scope.atan = (x) => radToDeg(Math.atan(x)) * 200 / 180;
-            } else { // DEG (الافتراضي)
-                sinFunc = (x) => Math.sin(degToRad(x));
-                cosFunc = (x) => Math.cos(degToRad(x));
-                tanFunc = (x) => Math.tan(degToRad(x));
-                scope.asin = (x) => radToDeg(Math.asin(x));
-                scope.acos = (x) => radToDeg(Math.acos(x));
-                scope.atan = (x) => radToDeg(Math.atan(x));
+            // تحويل الوظائف المثلثية بناءً على وضع الزاوية
+            if (angleMode === 'deg') {
+                sanitized = sanitized.replace(/([a]?sin|cos|tan)\(([^)]+)\)/g, (match, func, val) => {
+                    const radians = `${val} * pi / 180`;
+                    return `${func}(${radians})`;
+                });
             }
             
-            scope.sin = sinFunc;
-            scope.cos = cosFunc;
-            scope.tan = tanFunc;
-            
-            let cleanExpr = expr
-                .replace(/fact/g, '!'); 
-            
-            return originalMathEvaluate(cleanExpr, scope);
-        };
-
-        // *************** وظائف الإدخال والحساب ***************
-        function updateDisplays() {
-            // استبدال الرموز البرمجية بالرموز الرياضية للعرض
-            expressionDisplay.textContent = currentExpression
-                .replace(/\*/g, '×')
-                .replace(/\//g, '÷')
-                .replace(/\^/g, 'ˣ')
-                .replace(/asin\(/g, 'sin⁻¹(')
-                .replace(/acos\(/g, 'cos⁻¹(')
-                .replace(/atan\(/g, 'tan⁻¹(')
-                .replace(/fact/g, '!')
-                .replace(/STO/g, 'STO')
-                .replace(/RCL/g, 'RCL')
-                .replace(/CALC/g, 'CALC');
+            return sanitized;
         }
 
         function appendInput(value) {
+            if (value === 'space') {
+                value = ' ';
+            }
+            if (value === 'ANS') {
+                value = 'ans';
+            }
+            inputDisplay.textContent += value;
+            lastInput = inputDisplay.textContent;
             
-            // إلغاء حالة SHIFT و ALPHA بعد استخدام وظيفة ثانوية
-            if (isShiftActive || isAlphaActive) {
-                 isShiftActive = false;
-                 isAlphaActive = false;
-                 updateStatusDisplay();
-            }
-            
-            if (isResultDisplayed) {
-                // إذا كانت الشاشة تعرض نتيجة، ابدأ بتعبير جديد إلا إذا كان المدخل عملية حسابية
-                if (!['+', '-', '*', '/', '^', '(', ')', 'fact', 'log(', 'ln('].includes(value) && !value.match(/^(sin|cos|tan)\(/)) {
-                    currentExpression = '';
-                } else if (['+', '-', '*', '/', '^'].includes(value)) {
-                    // إذا كان المدخل عملية حسابية، فاستخدم النتيجة السابقة كبداية للتعبير
-                    currentExpression = String(lastAnswer);
-                } else {
-                    currentExpression = '';
-                }
-                isResultDisplayed = false;
-            }
-            
-            // التعامل مع الإدخال
-            if (value === 'pi') {
-                 currentExpression += 'pi';
-            } else if (value === 'e') {
-                 currentExpression += 'e';
-            } else if (value === 'minus-sign') {
-                currentExpression += '-';
-            } else if (value === 'Ans') {
-                currentExpression += 'Ans';
-            }
-            // التعامل مع الأصفار الابتدائية
-            else if (currentExpression === '' && value === '0') {
-                 return;
-            }
-            // التعامل مع الإدخال العادي
-            else {
-                currentExpression += value;
-            }
-            
-            resultDisplay.textContent = ''; 
-            updateDisplays();
+            // إلغاء تفعيل وضع SHIFT/ALPHA بعد الإدخال
+            if (isShiftActive) toggleShift();
+            if (isAlphaActive) toggleAlpha();
         }
 
         function calculate() {
-            if (currentExpression === '') return;
+            let expression = inputDisplay.textContent;
             
-            // منع الحساب إذا كان التعبير يحتوي على وظائف غير مدعومة رياضياً (فقط تعرض على الشاشة)
-            if (currentExpression.includes('CALC') || currentExpression.includes('STO') || currentExpression.includes('RCL')) {
-                 resultDisplay.textContent = 'Syntax Error';
-                 isResultDisplayed = true;
-                 return;
+            if (!expression) {
+                resultDisplay.textContent = 0;
+                lastResult = 0;
+                return;
             }
 
             try {
-                let result = math.evaluate(currentExpression);
+                const safeExpression = sanitizeInput(expression);
+                let result = math.evaluate(safeExpression);
                 
-                if (typeof result === 'number' && !isFinite(result)) {
-                    resultDisplay.textContent = 'Error';
-                } else {
-                    resultDisplay.textContent = String(result);
-                    lastAnswer = result; // حفظ النتيجة في Ans
-                    currentExpression = String(result); 
-                }
-                isResultDisplayed = true;
+                // تنسيق النتيجة
+                resultDisplay.textContent = result.toFixed(10).replace(/\.?0+$/, ''); 
+                lastResult = result;
                 
-            } catch (e) {
+                // مسح الإدخال بعد النتيجة
+                inputDisplay.textContent = '';
+                
+            } catch (error) {
                 resultDisplay.textContent = 'Syntax Error';
-                isResultDisplayed = true;
             }
-            updateDisplays();
-        }
-
-        function resetCalculator() {
-            currentExpression = '';
-            resultDisplay.textContent = '0';
-            isResultDisplayed = false;
-            updateDisplays();
         }
         
-        function deleteLast() {
-            if (isResultDisplayed) return;
-            currentExpression = currentExpression.slice(0, -1);
-            if (currentExpression === '') {
-                resultDisplay.textContent = '0';
+        function clearInput(type) {
+            if (type === 'AC') {
+                inputDisplay.textContent = '';
+                resultDisplay.textContent = 0;
+                lastResult = 0;
+            } else if (type === 'DEL') {
+                inputDisplay.textContent = inputDisplay.textContent.slice(0, -1);
             }
-            updateDisplays();
+            lastInput = inputDisplay.textContent;
         }
 
-        // *************** ربط الأزرار ***************
-        const keys = document.querySelector('.calculator-keys');
-        keys.addEventListener('click', (event) => {
-            const { target } = event;
-            const { value } = target;
+        function handleSignChange() {
+            const currentInput = inputDisplay.textContent;
+            const lastNumRegex = /([0-9\.]+)$|(\([\-]*[0-9\.]+\))$/; // يجد آخر رقم أو قوس
+            const match = currentInput.match(lastNumRegex);
 
-            if (!target.matches('button')) { return; }
+            if (match) {
+                const lastPart = match[0];
+                const newPart = currentInput.replace(lastPart, `(-${lastPart})`);
+                inputDisplay.textContent = newPart;
+            } else if (currentInput === '') {
+                 appendInput('(-');
+            } else {
+                 appendInput('(-'); // إذا لم يجد رقم، يضيف بداية قوس سالب
+            }
+        }
+        
+        // -------------------------------------
+        // مستمع الأحداث (Event Listener)
+        // -------------------------------------
+
+        keypad.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('key')) return;
+
+            const value = e.target.getAttribute('data-value');
 
             switch (value) {
+                case 'AC':
+                case 'DEL':
+                    clearInput(value);
+                    break;
                 case '=':
                     calculate();
                     break;
-                case 'all-clear':
-                    resetCalculator();
-                    break;
-                case 'delete':
-                    deleteLast();
-                    break;
-                
                 case 'shift':
                     toggleShift();
                     break;
@@ -727,13 +591,16 @@
                 case 'open-mode-modal':
                     openModeModal();
                     break;
+                case '+/-':
+                    handleSignChange();
+                    break;
                 
                 // الوظائف المثلثية (تتأثر بـ SHIFT)
                 case 'sin(':
                 case 'cos(':
                 case 'tan(':
-                    const funcPrefix = isShiftActive ? `a${value}` : value;
-                    appendInput(funcPrefix); 
+                    const trigFunc = isShiftActive ? `a${value}` : value;
+                    appendInput(trigFunc); 
                     break;
                 
                 // وظائف القوى والجذور (تتأثر بـ SHIFT)
@@ -746,7 +613,7 @@
                     appendInput(lnFunc);
                     break;
                 case 'x⁻¹': 
-                    const invFunc = isShiftActive ? 'fact' : '^(-1)';
+                    const invFunc = isShiftActive ? 'fact(' : '^(-1)';
                     appendInput(invFunc);
                     break;
                     
@@ -754,9 +621,26 @@
                     const sqFunc = isShiftActive ? 'sqrt(' : '^2';
                     appendInput(sqFunc);
                     break;
+                
+                case '^':
+                    const powFunc = isShiftActive ? 'nthRoot(' : '^';
+                    appendInput(powFunc);
+                    break;
+                
+                case 'comma':
+                    // لإدخال الثوابت (في وضع ALPHA) أو الفاصلة (في الوضع العادي)
+                    const commaValue = isAlphaActive ? 'e' : ',';
+                    appendInput(commaValue);
+                    break;
                     
+                case 'E':
+                    // (في وضع ALPHA) أو ENG (في الوضع العادي)
+                    const engValue = isAlphaActive ? 'e' : 'e'; // تبسيط
+                    appendInput(engValue);
+                    break;
+                
                 default:
-                    // الأرقام والعمليات العادية
+                    // الأرقام والعمليات العادية والثوابت (π, e, Ans)
                     appendInput(value);
                     break;
             }
