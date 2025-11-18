@@ -8,22 +8,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.3.0/math.js"></script>
 
     <style>
-        /* ------------------------------------- */
-        /* 1. التنسيقات العامة المدمجة من styles.css */
-        /* ------------------------------------- */
-
-        /* المتغيرات (Variables) */
         :root {
-            --primary-color: #007bff;        /* أزرق ساطع */
-            --secondary-color: #28a745;      /* أخضر */
-            --background-light: #f8f9fa;     /* خلفية فاتحة جداً */
-            --text-dark: #343a40;            /* نص داكن */
-            --card-background: #ffffff;      /* خلفية البطاقة بيضاء */
-            --border-color: #dee2e6;          /* لون حدود خفيف */
-            --header-bg-color: #1a1a2e;       /* لون خلفية الشريط العلوي (داكن عميق) */
-            --header-text-color: #ffffff;    /* لون نص الشريط العلوي */
-
-            /* 2. المتغيرات الخاصة بالآلة الحاسبة (للتكامل) */
+            --header-bg-color: #1a1a2e;
+            --header-text-color: #ffffff;
+            --primary-color: #007bff;
+            /* ألوان Casio fx-991EX */
             --casio-frame-color: #333;
             --casio-key-base: #f7f7f7;
             --casio-key-num: #e0e0e0;
@@ -32,36 +21,33 @@
             --casio-screen-bg: #e0eee0;
             --casio-shift-color: #007bff; /* أزرق */
             --casio-alpha-color: #f44336; /* أحمر */
+
+            /* الألوان المضافة لتحسين المظهر */
+            --color-ac: #e74c3c; /* أحمر للـ AC */
+            --color-del: #f39c12; /* برتقالي للـ DEL */
+            --color-operator: #2ecc71; /* أخضر للعمليات */
+            --color-equal: #00bcd4; /* أزرق سماوي لـ = */
         }
 
-        /* 💻 تنسيق الجسم (من styles.css) */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            
-            /* تم تحديث الخلفية لتعمل مع متغير styles.css */
-            background-color: var(--background-light); 
-            background-size: cover; 
-            background-attachment: fixed; 
-            background-position: center center; 
-            
-            color: var(--text-dark);
+            background-color: #f0f0f5;
             margin: 0;
-            padding: 0;
             display: flex;
-            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
-            min-height: 100vh;
-            width: 100%; /* إضافة من كود الحاسبة لضمان الامتداد */
+            min-height: 10vh;
+            flex-direction: column;
+            width: 100%;
         }
-
-        /* الترويسة العلوية للموقع (من styles.css) */
+        
         .main-header {
             width: 100%;
             background-color: var(--header-bg-color);
             color: var(--header-text-color);
             padding: 20px 0;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
             margin-bottom: 30px;
         }
 
@@ -70,22 +56,9 @@
             font-size: 2.5rem;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 
                          0 0 10px rgba(0, 123, 255, 0.5); 
-            color: #fff; 
+            color: #fff;
         }
-
-        /* الروابط العامة (من styles.css) */
-        a {
-            color: var(--primary-color);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        a:hover {
-            color: var(--secondary-color);
-            text-decoration: underline;
-        }
-
-        /* رابط العودة (من styles.css) */
+        
         .back-link {
             margin-bottom: 20px;
             text-decoration: none;
@@ -95,12 +68,8 @@
             transition: color 0.3s;
         }
         .back-link:hover {
-            color: #0056b3; /* لون أغمق للهوفر */
+            color: #0056b3;
         }
-
-        /* ------------------------------------- */
-        /* 2. تنسيقات الآلة الحاسبة الخاصة */
-        /* ------------------------------------- */
 
         /* تنسيقات الآلة الحاسبة */
         .calculator {
@@ -192,13 +161,24 @@
             color: white !important;
         }
 
-        /* أزرار DEL/AC */
-        .control-key {
-            background-color: #a0a0a0;
-            color: black;
+        /* الألوان الجديدة للأزرار */
+        .control-key[value="all-clear"] {
+            background-color: var(--color-ac);
+            color: white;
+            font-weight: bold;
+        }
+        .control-key[value="delete"] {
+            background-color: var(--color-del);
+            color: white;
             font-weight: bold;
         }
         
+        .operator {
+            background-color: var(--color-operator);
+            color: white;
+            font-weight: bold;
+        }
+
         /* الأزرار البرتقالية (الـ Scientific Keys في FX-991EX) */
         .scientific-key {
             background-color: var(--casio-key-func);
@@ -209,12 +189,12 @@
         
         /* زر يساوي */
         .equal-sign {
-            background-color: #00bcd4;
+            background-color: var(--color-equal);
             color: white;
             font-size: 1.5rem;
             font-weight: bold;
         }
-        
+
         /* تنسيقات نافذة MODE */
         #modeModal {
             display: none; 
@@ -266,9 +246,9 @@
         }
         
         .mode-button span {
-            font-weight: bold;
-            color: #007bff;
-            margin-right: 5px;
+             font-weight: bold;
+             color: #007bff;
+             margin-right: 5px;
         }
 
         .mode-button:hover {
@@ -277,54 +257,12 @@
         }
         
         /* النافذة الترحيبية */
-        .welcome-box { 
-            background-color: #fff; 
-            padding: 30px 40px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
-            text-align: center; 
-            width: 90%; 
-            max-width: 400px; 
-            border: 3px solid #007bff; 
-            animation: fadeIn 0.5s; 
-        }
-        .welcome-box p { 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            color: #1a1a2e; 
-            margin-bottom: 25px; 
-        }
-        .continue-button { 
-            padding: 12px 30px; 
-            background-color: #007bff; 
-            color: white; 
-            border: none; 
-            border-radius: 8px; 
-            font-size: 1.2rem; 
-            cursor: pointer; 
-            transition: background-color 0.3s; 
-        }
-        .continue-button:hover { 
-            background-color: #0056b3; 
-        }
-        .modal-overlay { 
-            display: flex; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background-color: rgba(0, 0, 0, 0.7); 
-            z-index: 1000; 
-            justify-content: center; 
-            align-items: center; 
-            backdrop-filter: blur(5px); 
-        }
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: scale(0.9); } 
-            to { opacity: 1; transform: scale(1); } 
-        }
-        
+        .welcome-box { background-color: #fff; padding: 30px 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); text-align: center; width: 90%; max-width: 400px; border: 3px solid #007bff; animation: fadeIn 0.5s; }
+        .welcome-box p { font-size: 1.5rem; font-weight: bold; color: #1a1a2e; margin-bottom: 25px; }
+        .continue-button { padding: 12px 30px; background-color: #007bff; color: white; border: none; border-radius: 8px; font-size: 1.2rem; cursor: pointer; transition: background-color 0.3s; }
+        .continue-button:hover { background-color: #0056b3; }
+        .modal-overlay { display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body onload="openWelcomeModal(); updateStatusDisplay();">
@@ -482,7 +420,6 @@
                 calculatorMode = mode;
             }
             
-            // لا يتم محاولة تطبيق المنطق الرياضي المعقد لـ STAT/MATRIX إلخ. هنا، يتم فقط تحديث المؤشر
             closeModeModal();
             updateStatusDisplay();
         }
@@ -514,7 +451,6 @@
             // مؤشر MODE و Angle Mode
             statusText += `<span style="color: #555; margin-left: 10px;">${calculatorMode}</span>`;
             
-            // عرض مؤشر الزاوية فقط إذا لم يكن COMP، ولكن Casio تظهره دائماً تقريباً
             if (angleMode !== 'COMP') { 
                 statusText += `<span style="color: #555;">${angleMode}</span>`;
             }
@@ -526,20 +462,6 @@
             document.getElementById('cos-key').innerHTML = isShiftActive ? '<span style="color: var(--casio-shift-color); font-size: 0.7rem;">cos⁻¹</span><br>cos' : 'cos';
             document.getElementById('tan-key').innerHTML = isShiftActive ? '<span style="color: var(--casio-shift-color); font-size: 0.7rem;">tan⁻¹</span><br>tan' : 'tan';
 
-        }
-
-        // *************** وظائف الأزرار الخاصة (SHIFT, ALPHA) ***************
-        
-        function toggleShift() {
-            isShiftActive = !isShiftActive;
-            isAlphaActive = false; // إلغاء Alpha عند الضغط على Shift
-            updateStatusDisplay();
-        }
-
-        function toggleAlpha() {
-            isAlphaActive = !isAlphaActive;
-            isShiftActive = false; // إلغاء Shift عند الضغط على Alpha
-            updateStatusDisplay();
         }
 
         // *************** تعديل Math.js لدمج Angle Mode ***************
@@ -719,10 +641,14 @@
                     break;
                 
                 case 'shift':
-                    toggleShift();
+                    isAlphaActive = false; // إلغاء Alpha
+                    isShiftActive = !isShiftActive;
+                    updateStatusDisplay();
                     break;
                 case 'alpha':
-                    toggleAlpha();
+                    isShiftActive = false; // إلغاء Shift
+                    isAlphaActive = !isAlphaActive;
+                    updateStatusDisplay();
                     break;
                 case 'open-mode-modal':
                     openModeModal();
@@ -749,18 +675,47 @@
                     const invFunc = isShiftActive ? 'fact' : '^(-1)';
                     appendInput(invFunc);
                     break;
-                    
-                case 'x²':
-                    const sqFunc = isShiftActive ? 'sqrt(' : '^2';
+                case 'x²': 
+                    const sqFunc = isShiftActive ? 'sqrt(' : '^(2)';
                     appendInput(sqFunc);
                     break;
-                    
-                default:
-                    // الأرقام والعمليات العادية
+                case '^': 
+                    const powFunc = isShiftActive ? 'sqrt(' : '^'; 
+                    appendInput(powFunc);
+                    break;
+                case 'exp': 
+                    const expFunc = isShiftActive ? 'e' : 'exp(';
+                    appendInput(expFunc);
+                    break;
+
+                // الأزرار التي تعرض رموزاً لكنها لا تنفذ منطقاً معقداً
+                case 'STO':
+                case 'RCL':
+                case 'CALC':
+                case 'setup':
+                case 'hyp':
+                case 'S<=>D':
+                case 'on-off':
+                case 'Pol(':
+                case 'Abs(':
+                case 'Eng':
+                case 'fact':
+                case 'deg-min-sec':
+                case 'Exp':
+                case 'rnd':
+                case 'comma':
+                case 'mod':
                     appendInput(value);
                     break;
+
+                // الإدخال العادي
+                default:
+                    appendInput(value);
             }
         });
+        
+        // *************** التهيئة الأولية ***************
+        updateDisplays();
     </script>
 </body>
 </html>
