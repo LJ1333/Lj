@@ -6,13 +6,13 @@
     <title>محول القياسات - ليث</title>
     <style>
         /* ------------------------------------- */
-        /* 1. التنسيقات العامة المدمجة من styles.css */
+        /* التنسيقات العامة */
         /* ------------------------------------- */
 
         /* المتغيرات (Variables) - افتراضية */
         :root {
             --primary-color: #007bff;        /* أزرق ساطع */
-            --secondary-color: #28a745;      /* أخضر */
+            --secondary-color: #9c27b0;      /* بنفسجي للمحول */
             --background-light: #f8f9fa;     /* خلفية فاتحة جداً */
             --text-dark: #343a40;            /* نص داكن */
             --header-bg-color: #1a1a2e;       /* لون خلفية الشريط العلوي (داكن عميق) */
@@ -23,9 +23,6 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--background-light); 
-            background-size: cover; 
-            background-attachment: fixed; 
-            background-position: center center; 
             color: var(--text-dark);
             margin: 0;
             padding: 0;
@@ -33,10 +30,8 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            width: 100%;
         }
 
-        /* الترويسة العلوية للموقع */
         .main-header {
             width: 100%;
             background-color: var(--header-bg-color);
@@ -49,261 +44,301 @@
 
         .main-header h1 {
             margin: 0;
-            font-size: 2.5rem;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 
-                         0 0 10px rgba(0, 123, 255, 0.5); 
-            color: #fff; 
+            font-size: 2rem;
         }
 
-        /* رابط العودة */
         .back-link {
             margin-bottom: 20px;
             text-decoration: none;
             color: var(--primary-color);
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
             transition: color 0.3s;
-            display: block; /* لضمان أخذ سطر جديد داخل الحاوية */
+            display: block; 
             text-align: right;
+            width: 90%;
+            max-width: 500px;
         }
         .back-link:hover {
-            color: #0056b3; /* لون أغمق للهوفر */
+            color: #0056b3; 
         }
         
-        /* ------------------------------------- */
-        /* 2. التنسيقات الخاصة بالمحول (الموجودة مسبقاً) */
-        /* ------------------------------------- */
-        
-        /* التنسيقات العامة للحاوية (تم تعديلها لتكون مرئية افتراضياً) */
-        .unit-converter-container {
-            /* جعل المحتوى مرئياً بشكل دائم */
-            display: block; 
+        .container {
             max-width: 500px;
             width: 90%;
-            padding: 20px;
+            padding: 25px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin: 20px auto; 
+            text-align: center;
         }
 
-        /* تنسيقات حقول الإدخال والاختيار والنتائج */
-        .converter-input, .converter-select {
-            width: 100%;
+        /* ------------------------------------- */
+        /* تنسيقات محول القياسات */
+        /* ------------------------------------- */
+
+        .converter-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .converter-group label, .unit-label {
+            display: block;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 8px;
+        }
+
+        .converter-select, .unit-input, .unit-select {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            font-size: 1.1rem;
+            width: 100%;
             box-sizing: border-box;
-            font-size: 1rem;
-            margin-top: 5px;
             margin-bottom: 10px;
         }
 
-        .result-box {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #e6f7ff;
-            border: 1px solid #91d5ff;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #0056b3;
+        .unit-select {
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+        
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
         }
 
-        /* ------------------------------------- */
-        /* تم إزالة تنسيقات النافذة المنبثقة الترحيبية (.modal-overlay, .welcome-box, .button-continue) */
-        /* ------------------------------------- */
+        .input-row > div {
+            flex: 1;
+        }
+
+        .convert-button {
+            padding: 15px 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .convert-button:hover {
+            background-color: #7b1fa2;
+        }
+
+        .result-section {
+            margin-top: 25px;
+            border-top: 2px solid var(--secondary-color);
+            padding-top: 15px;
+        }
+
+        .result-section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+            font-size: 1.4rem;
+        }
+
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            display: block;
+        }
+        
     </style>
 </head>
-<body onload="initializeConverter()"> 
+<body>
     <header class="main-header">
-        <h1>محول القياسات</h1>
+        <h1>📐 محول القياسات</h1>
     </header>
 
-    <div id="converterContent" class="container unit-converter-container">
-        <a href="index.html" class="back-link">العودة إلى القائمة الرئيسية</a>
+    <a href="index.html" class="back-link">العودة إلى القائمة الرئيسية</a>
+
+    <div class="container">
         
-        <label for="inputValue" style="font-weight: bold; margin-bottom: 5px;">القيمة المراد تحويلها:</label>
-        <input type="number" id="inputValue" value="1" placeholder="أدخل القيمة" class="converter-input" oninput="convert()">
+        <div class="converter-group">
+            <label for="converterType">اختر نوع القياس:</label>
+            <select id="converterType" class="converter-select" onchange="initializeUnits()">
+                <option value="length">الطول</option>
+                <option value="weight">الوزن</option>
+                <option value="temperature">الحرارة</option>
+            </select>
+        </div>
 
-        <label for="unitType" style="font-weight: bold; margin-top: 15px; margin-bottom: 5px;">اختر نوع القياس:</label>
-        <select id="unitType" class="converter-select" onchange="updateUnits(); convert()">
-            <option value="length">الطول (Length)</option>
-            <option value="weight">الوزن (Weight)</option>
-            <option value="temperature">الحرارة (Temperature)</option>
-        </select>
-
-        <label for="fromUnit" style="font-weight: bold; margin-top: 15px; margin-bottom: 5px;">من وحدة:</label>
-        <select id="fromUnit" class="converter-select" onchange="convert()"></select>
+        <div class="converter-group">
+            <label for="inputValue">القيمة:</label>
+            <input type="number" id="inputValue" class="unit-input" placeholder="أدخل القيمة" value="1">
+        </div>
         
-        <label for="toUnit" style="font-weight: bold; margin-top: 15px; margin-bottom: 5px;">إلى وحدة:</label>
-        <select id="toUnit" class="converter-select" onchange="convert()"></select>
+        <div class="input-row">
+            <div>
+                <label for="fromUnit" class="unit-label">من وحدة:</label>
+                <select id="fromUnit" class="unit-select"></select>
+            </div>
+            <div>
+                <label for="toUnit" class="unit-label">إلى وحدة:</label>
+                <select id="toUnit" class="unit-select"></select>
+            </div>
+        </div>
 
-        <div class="result-box">
-            <label style="font-weight: bold;">النتيجة:</label>
-            <span id="resultValue">0</span>
+        <button class="convert-button" onclick="convertUnit()">
+            تحويل
+        </button>
+
+        <div class="result-section">
+            <h3>النتيجة:</h3>
+            <span id="resultValue" class="result-value">0</span>
         </div>
     </div>
 
+
     <script>
-    const unitData = {
-    length: {
-        // الوحدات المرجعية: المتر (Meter) هو 1
-        units: {
-            meter: 1,
-            centimeter: 0.01,
-            kilometer: 1000,
-            millimeter: 0.001,
-            inch: 0.0254,
-            foot: 0.3048,
-            mile: 1609.34
-        },
-        displayNames: {
-            meter: "متر (m)",
-            centimeter: "سنتيمتر (cm)",
-            kilometer: "كيلومتر (km)",
-            millimeter: "مليمتر (mm)",
-            inch: "بوصة (in)",
-            foot: "قدم (ft)",
-            mile: "ميل (mi)"
-        }
-    },
-    weight: {
-        // الوحدات المرجعية: الكيلوغرام (Kilogram) هو 1
-        units: {
-            kilogram: 1,
-            gram: 0.001,
-            milligram: 0.000001,
-            ton: 1000,
-            pound: 0.453592,
-            ounce: 0.0283495
-        },
-        displayNames: {
-            kilogram: "كيلوغرام (kg)",
-            gram: "غرام (g)",
-            milligram: "مليغرام (mg)",
-            ton: "طن",
-            pound: "رطل (lb)",
-            ounce: "أونصة (oz)"
-        }
-    },
-    temperature: {
-        // التحويلات تتطلب صيغة خاصة (ليست مجرد ضرب)
-        units: {
-            celsius: 'C',
-            fahrenheit: 'F',
-            kelvin: 'K'
-        },
-        displayNames: {
-            celsius: "سيلسيوس (°C)",
-            fahrenheit: "فهرنهايت (°F)",
-            kelvin: "كلفن (K)"
-        }
-    }
-};
+        const unitData = {
+            length: {
+                referenceUnit: 'meter', // الوحدة المرجعية للتحويل
+                units: {
+                    meter: { name: 'متر', factor: 1 },
+                    kilometer: { name: 'كيلومتر', factor: 1000 },
+                    centimeter: { name: 'سنتيمتر', factor: 0.01 },
+                    millimeter: { name: 'مليمتر', factor: 0.001 },
+                    inch: { name: 'إنش', factor: 0.0254 },
+                    foot: { name: 'قدم', factor: 0.3048 },
+                    yard: { name: 'ياردة', factor: 0.9144 }
+                }
+            },
+            weight: {
+                referenceUnit: 'kilogram', // الوحدة المرجعية للتحويل
+                units: {
+                    kilogram: { name: 'كيلوغرام', factor: 1 },
+                    gram: { name: 'غرام', factor: 0.001 },
+                    milligram: { name: 'مليغرام', factor: 0.000001 },
+                    pound: { name: 'رطل', factor: 0.453592 },
+                    ounce: { name: 'أونصة', factor: 0.0283495 }
+                }
+            },
+            temperature: {
+                // ليس لها عامل ضرب ثابت (تحويل خطي مختلف)
+                units: {
+                    celsius: { name: 'سيلسيوس' },
+                    fahrenheit: { name: 'فهرنهايت' },
+                    kelvin: { name: 'كلفن' }
+                }
+            }
+        };
 
-const unitTypeSelect = document.getElementById('unitType');
-const fromUnitSelect = document.getElementById('fromUnit');
-const toUnitSelect = document.getElementById('toUnit');
-const inputValue = document.getElementById('inputValue');
-const resultValue = document.getElementById('resultValue');
+        const converterTypeSelect = document.getElementById('converterType');
+        const fromUnitSelect = document.getElementById('fromUnit');
+        const toUnitSelect = document.getElementById('toUnit');
+        const inputValue = document.getElementById('inputValue');
+        const resultValue = document.getElementById('resultValue');
 
-// *************** تم إزالة عناصر الـ Modal والوظائف المتعلقة بها ***************
+        // -------------------------------------
+        // وظائف تهيئة الوحدات
+        // -------------------------------------
 
-// وظيفة تهيئة المحول (تسمى عند تحميل الـ body)
-function initializeConverter() {
-    updateUnits();
-    convert();
-}
+        function initializeUnits() {
+            const type = converterTypeSelect.value;
+            const units = unitData[type].units;
 
-// وظيفة تحديث القوائم المنسدلة للوحدات
-function updateUnits() {
-    const selectedType = unitTypeSelect.value;
-    const units = unitData[selectedType].units;
-    const displayNames = unitData[selectedType].displayNames;
+            // مسح الخيارات القديمة
+            fromUnitSelect.innerHTML = '';
+            toUnitSelect.innerHTML = '';
 
-    fromUnitSelect.innerHTML = '';
-    toUnitSelect.innerHTML = '';
+            // ملء قوائم الاختيار بالوحدات الجديدة
+            for (const key in units) {
+                const name = units[key].name;
 
-    for (const key in units) {
-        const optionText = displayNames[key];
-        
-        // إضافة الخيارات لـ 'من'
-        const fromOption = document.createElement('option');
-        fromOption.value = key;
-        fromOption.textContent = optionText;
-        fromUnitSelect.appendChild(fromOption);
-        
-        // إضافة الخيارات لـ 'إلى'
-        const toOption = document.createElement('option');
-        toOption.value = key;
-        toOption.textContent = optionText;
-        toUnitSelect.appendChild(toOption);
-    }
-    
-    // ضبط القيم الافتراضية
-    if (selectedType === 'length') {
-        fromUnitSelect.value = 'centimeter';
-        toUnitSelect.value = 'meter';
-    } else if (selectedType === 'weight') {
-        fromUnitSelect.value = 'gram';
-        toUnitSelect.value = 'kilogram';
-    } else if (selectedType === 'temperature') {
-        fromUnitSelect.value = 'celsius';
-        toUnitSelect.value = 'fahrenheit';
-    }
-}
+                const fromOption = document.createElement('option');
+                fromOption.value = key;
+                fromOption.textContent = name;
+                fromUnitSelect.appendChild(fromOption);
 
-// وظيفة التحويل الرئيسية
-function convert() {
-    const type = unitTypeSelect.value;
-    const fromUnit = fromUnitSelect.value;
-    const toUnit = toUnitSelect.value;
-    let value = parseFloat(inputValue.value);
-
-    if (isNaN(value)) {
-        resultValue.textContent = '0';
-        return;
-    }
-
-    let result;
-
-    if (type === 'temperature') {
-        // التحويل خاص للحرارة
-        
-        // 1. تحويل القيمة الأصلية إلى سيلسيوس (C) أولاً
-        let celsiusValue = value;
-        if (fromUnit === 'fahrenheit') {
-            celsiusValue = (value - 32) * 5 / 9;
-        } else if (fromUnit === 'kelvin') {
-            celsiusValue = value - 273.15;
+                const toOption = document.createElement('option');
+                toOption.value = key;
+                toOption.textContent = name;
+                toUnitSelect.appendChild(toOption);
+            }
+            
+            // تعيين الافتراضيات
+            if (type === 'length') {
+                fromUnitSelect.value = 'meter';
+                toUnitSelect.value = 'kilometer';
+            } else if (type === 'weight') {
+                fromUnitSelect.value = 'kilogram';
+                toUnitSelect.value = 'gram';
+            } else if (type === 'temperature') {
+                fromUnitSelect.value = 'celsius';
+                toUnitSelect.value = 'fahrenheit';
+            }
+            
+            // مسح النتيجة عند التغيير
+            resultValue.textContent = '0';
+            inputValue.value = 1;
         }
 
-        // 2. تحويل قيمة سيلسيوس (C) إلى الوحدة المطلوبة (toUnit)
-        if (toUnit === 'fahrenheit') {
-            result = (celsiusValue * 9 / 5) + 32;
-        } else if (toUnit === 'kelvin') {
-            result = celsiusValue + 273.15;
-        } else { // إلى سيلسيوس
-            result = celsiusValue;
-        }
-        
-    } else {
-        // تحويل القياسات القياسية (الطول والوزن) باستخدام الوحدة المرجعية
-        const units = unitData[type].units;
-        
-        // 1. تحويل القيمة الأصلية إلى الوحدة المرجعية (المتر أو الكيلوغرام)
-        const baseValue = value * units[fromUnit];
-        
-        // 2. تحويل القيمة المرجعية إلى الوحدة المطلوبة
-        result = baseValue / units[toUnit];
-    }
+        // -------------------------------------
+        // وظائف التحويل
+        // -------------------------------------
 
-    resultValue.textContent = result.toFixed(4); // عرض 4 منازل عشرية
-}
-    
-    // ** ملاحظة: تم تعديل onload في وسم <body> لتعمل على initializeConverter() بدلاً من openWelcomeModal() **
+        function convertUnit() {
+            const type = converterTypeSelect.value;
+            const fromUnit = fromUnitSelect.value;
+            const toUnit = toUnitSelect.value;
+            let value = parseFloat(inputValue.value);
+
+            if (isNaN(value)) {
+                resultValue.textContent = '0';
+                return;
+            }
+
+            let result;
+
+            if (type === 'temperature') {
+                // التحويل الخاص لدرجات الحرارة (ليس عاملاً ثابتاً)
+                
+                // 1. تحويل القيمة الأصلية إلى سيلسيوس (C) أولاً
+                let celsiusValue = value;
+                if (fromUnit === 'fahrenheit') {
+                    celsiusValue = (value - 32) * 5 / 9;
+                } else if (fromUnit === 'kelvin') {
+                    celsiusValue = value - 273.15;
+                }
+
+                // 2. تحويل قيمة سيلسيوس (C) إلى الوحدة المطلوبة (toUnit)
+                if (toUnit === 'fahrenheit') {
+                    result = (celsiusValue * 9 / 5) + 32;
+                } else if (toUnit === 'kelvin') {
+                    result = celsiusValue + 273.15;
+                } else { // إلى سيلسيوس
+                    result = celsiusValue;
+                }
+                
+            } else {
+                // تحويل القياسات القياسية (الطول والوزن) باستخدام الوحدة المرجعية
+                const units = unitData[type].units;
+                const referenceUnit = unitData[type].referenceUnit;
+                
+                // 1. تحويل القيمة الأصلية إلى الوحدة المرجعية (المتر أو الكيلوغرام)
+                const fromFactor = units[fromUnit].factor;
+                const valueInReference = value * fromFactor;
+
+                // 2. تحويل القيمة المرجعية إلى الوحدة المطلوبة
+                const toFactor = units[toUnit].factor;
+                result = valueInReference / toFactor;
+            }
+
+            // عرض النتيجة
+            resultValue.textContent = result.toFixed(4);
+        }
+
+        // تهيئة الوحدات عند تحميل الصفحة
+        window.onload = initializeUnits;
+
     </script>
 </body>
 </html>
